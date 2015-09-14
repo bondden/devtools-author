@@ -70,8 +70,13 @@
       'Theme',  // Panel title
       null,     // Panel icon
       pagePath, // Path of panel's HTML page
-      null      // Callback
+      function(panel){
+        console.log(panel);
+        console.log(JSON.stringify(panel));
+      }
     );
+
+    console.log('yo!');
 
     // Get theme from Chrome storage
     storage.get('devtools-theme', function(object){
