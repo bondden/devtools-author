@@ -37,7 +37,7 @@ module.exports = function(grunt) {
         tasks: ['sass', 'autoprefixer']
       },
       js: {
-        files: [ 'Gruntfile.js', '<%= devtools.app %>/scripts/{,*/}*.js'],
+        files: [ 'Gruntfile.js', '<%= devtools.app %>/scripts/{,*/}*.js', '<%= devtools.app %>/scripts/{,*/}*.json'],
         tasks: ['newer:jshint:all', 'copy:js']
       },
       images: {
@@ -96,7 +96,11 @@ module.exports = function(grunt) {
         reporter: require('jshint-stylish'),
         jshintrc: '.jshintrc',
       },
-      all: [ 'Gruntfile.js', '<%= devtools.app %>/scripts/{,*/}*.js' ]
+      all: [
+        'Gruntfile.js',
+        '<%= devtools.app %>/scripts/{,*/}*.js',
+        '!<%= devtools.app %>/scripts/ga.js'
+      ]
     },
 
     // Copies remaining files
@@ -111,7 +115,7 @@ module.exports = function(grunt) {
         expand: true,
         cwd: '<%= devtools.app %>/scripts',
         dest: '<%= devtools.dist %>/scripts',
-        src: '{,*/}*.js'
+        src: ['{,*/}*.js', '{,*/}*.json']
       },
       images: {
         expand: true,
@@ -119,6 +123,7 @@ module.exports = function(grunt) {
         dest: '<%= devtools.dist %>/images',
         src: [
           '{,*/}*.png',
+          '!screenshots/{,*/}*.png',
           '!440x280_small-tile.png',
           '!920x680_large-tile.png',
           '!1400x560_marquee.png',
@@ -150,22 +155,18 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('test', [
-    'newer:jshint'
-  ]);
-
-  grunt.registerTask('package', [
-    'zip'
-  ]);
-
   // Default task.
   grunt.registerTask('default', [
-    'test',
+    'newer:jshint',
     'clean',
     'sass',
     'autoprefixer',
     'cssmin',
-    'copy',
-    'package'
+    'copy'
+  ]);
+
+  grunt.registerTask('package', [
+    'default',
+    'zip'
   ]);
 };

@@ -2,17 +2,22 @@
 <html>
 <head>
   <link rel="stylesheet" href="styles/panel.css" />
+  <script src="scripts/ga.js"></script>
 </head>
 <body>
   <div class="alert">Reload DevTools to apply your changes!</div>
+  
   <div class="container">
       <h4><small>Current Theme:</small></h4>
-      <h1 id="currentTheme"></h1>
-      <select data-options="theme in themes"></select>
+      <header class="title">
+        <h1 id="currentTheme"></h1>
+      </header>
+      <ul class="palette"></ul>
+      <select id="theme-options" data-options="theme in themes"></select>
       
       <div class="font-size">
-        <label for="font-size-input">Font size (px):</label>
-        <input id="font-size-input" type="number" min="10" max="16" value="12" placeholder="Default 12px" />
+        <label for="font-size-input">Font size: <output id="font-size-output" for="font-size-input"></output>px</label>
+        <input id="font-size-input" type="range" min="10" max="22" />
       </div>
   </div>
   
